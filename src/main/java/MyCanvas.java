@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 
 public class MyCanvas extends JPanel implements MouseListener, MouseMotionListener {
     @Getter @Setter
@@ -17,15 +18,37 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
     @Getter @Setter
     private boolean usecka;
 
+    private Usecka newUsecka;
+    private ArrayList<Usecka> listOfUsecka;
+
     public MyCanvas(){
         this.setPreferredSize(new Dimension(400,400));
         this.setBackground(Color.WHITE);
+        this.addMouseListener(this);
+        this.addMouseMotionListener(this);
         this.color = new Color(Color.RED.getRGB());
         this.drawing = true;
         this.plus = false;
         this.usecka = false;
 
-        this.setVisible(true);
+        this.listOfUsecka = new ArrayList<>();
+
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        paintingOfUsecka(g);
+    }
+
+    private void paintingOfUsecka(Graphics g){
+        for(int i = 0; i < this.listOfUsecka.size(); i++){
+            g.setColor(this.listOfUsecka.get(i).getColor());
+            g.drawLine(this.listOfUsecka.get(i).getStartPoint().x, this.listOfUsecka.get(i).getStartPoint().y, this.listOfUsecka.get(i).getEndPoint().x,
+                    this.listOfUsecka.get(i).getEndPoint().y);
+        }
+        g.setColor(this.newUsecka.getColor());
+        g.drawLine(this.newUsecka.getStartPoint().x, this.newUsecka.getStartPoint().y, this.newUsecka.getEndPoint().x, this.newUsecka.getEndPoint().y);
     }
 
     public void changeStateOfMode(){
@@ -49,12 +72,19 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        if(this.usecka && this.drawing){
+            this.newUsecka = new Usecka(this.color, new Point(e.getX(), e.getY()), new Point(e.getX(), e.getY()));
+            this.repaint();
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+        if(this.usecka && this.drawing) {
+            this.newUsecka.changeActualEndPoint(e.getX(), e.getY());
+            this.listOfUsecka.add(this.newUsecka);
+            this.repaint();
+        }
     }
 
     @Override
@@ -69,7 +99,10 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
 
     @Override
     public void mouseDragged(MouseEvent e) {
-
+        if(this.usecka && this.drawing) {
+            this.newUsecka.changeActualEndPoint(e.getX(), e.getY());
+            this.repaint();
+        }
     }
 
     @Override
