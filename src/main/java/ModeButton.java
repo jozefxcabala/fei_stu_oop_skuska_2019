@@ -1,8 +1,11 @@
+import lombok.Getter;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ModeButton extends Button implements ActionListener {
+    @Getter
     private boolean drawing;
 
     public ModeButton(String nameOfButton){
