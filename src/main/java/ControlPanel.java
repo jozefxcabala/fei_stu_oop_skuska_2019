@@ -9,16 +9,17 @@ public class ControlPanel extends JPanel implements ItemListener {
     private UseckaButton useckaButton;
     private Choice chooseColor;
     private Label pickColor;
-
     private String[] colors;
+    private MyCanvas canvas;
 
-    public ControlPanel(){
-        initialization();
+    public ControlPanel(MyCanvas canvas){
+        this.canvas = canvas;
+        initializationOfControlPanel();
     }
 
-    private void initialization(){
-        this.plusButton = new PlusButton("PLUS");
-        this.useckaButton = new UseckaButton("USECKA");
+    private void initializationOfControlPanel(){
+        this.plusButton = new PlusButton("PLUS", this.canvas);
+        this.useckaButton = new UseckaButton("USECKA", this.canvas);
         this.chooseColor = new Choice();
         this.pickColor = new Label();
 
@@ -50,11 +51,17 @@ public class ControlPanel extends JPanel implements ItemListener {
     @Override
     public void itemStateChanged(ItemEvent e) {
         System.out.println("Color is: " + e.getItem().toString());
-        if(e.getItem().toString().equals("RED"))
+        if(e.getItem().toString().equals("RED")){
             this.pickColor.setBackground(Color.RED);
-        else if(e.getItem().toString().equals("GREEN"))
+            this.canvas.setColor(Color.RED);
+        }
+        else if(e.getItem().toString().equals("GREEN")){
             this.pickColor.setBackground(Color.GREEN);
-        else if(e.getItem().toString().equals("BLUE"))
+            this.canvas.setColor(Color.GREEN);
+        }
+        else if(e.getItem().toString().equals("BLUE")){
             this.pickColor.setBackground(Color.BLUE);
+            this.canvas.setColor(Color.BLUE);
+        }
     }
 }

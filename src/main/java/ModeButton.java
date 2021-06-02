@@ -5,24 +5,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class ModeButton extends Button implements ActionListener {
-    @Getter
-    private boolean drawing;
+    private MyCanvas canvas;
 
-    public ModeButton(String nameOfButton){
+    public ModeButton(String nameOfButton, MyCanvas canvas){
         super(nameOfButton);
         this.addActionListener(this);
 
-        this.drawing = true;
+        this.canvas = canvas;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(this.drawing){
-            this.drawing = false;
-            System.out.println("MODE MARKING");
-        }
-        else{
-            this.drawing = true;
-            System.out.println("MODE DRAWING");
-        }
+        this.canvas.changeStateOfMode();
+        System.out.println("MODE DRAWING: " + this.canvas.isDrawing() );
     }
 }

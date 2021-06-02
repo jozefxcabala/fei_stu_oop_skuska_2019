@@ -10,13 +10,13 @@ public class MyFrame extends JFrame {
         super(nameOfWindow);
         this.setLayout(new BorderLayout());
 
-        this.controlPanel = new ControlPanel();
-        this.add(this.controlPanel, BorderLayout.PAGE_START);
-
         this.canvas = new MyCanvas();
         this.add(this.canvas, BorderLayout.CENTER);
 
-        this.modeButton = new ModeButton("MODE");
+        this.controlPanel = new ControlPanel(this.canvas);
+        this.add(this.controlPanel, BorderLayout.PAGE_START);
+
+        this.modeButton = new ModeButton("MODE", this.canvas);
         this.add(this.modeButton, BorderLayout.PAGE_END);
 
         this.pack();
