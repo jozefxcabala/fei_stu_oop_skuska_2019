@@ -30,7 +30,7 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
         this.drawing = true;
         this.plus = false;
         this.usecka = false;
-
+        this.newUsecka = new Usecka(); //tu bola chyba ked to nebolo inicializovane pred kreslenim
         this.listOfUsecka = new ArrayList<>();
 
     }

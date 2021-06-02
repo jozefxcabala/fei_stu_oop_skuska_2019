@@ -10,6 +10,10 @@ public class Usecka {
     private Point endPoint;
     private Color color;
 
+    public Usecka(){
+        this.startPoint = new Point();
+        this.endPoint = new Point();
+    }
     public Usecka(Color color, Point startPoint, Point endPoint){
         this.color = color;
         this.startPoint = startPoint;
