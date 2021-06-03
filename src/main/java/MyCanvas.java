@@ -51,19 +51,15 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
 
     private void paintingOfUsecka(Graphics g){
         for (Usecka value : this.listOfUsecka) {
-            g.setColor(value.getColor());
-            g.drawLine(value.getStartPoint().x, value.getStartPoint().y, value.getEndPoint().x,
-                    value.getEndPoint().y);
+            value.drawShape(g);
         }
-        g.setColor(this.newUsecka.getColor());
-        g.drawLine(this.newUsecka.getStartPoint().x, this.newUsecka.getStartPoint().y, this.newUsecka.getEndPoint().x, this.newUsecka.getEndPoint().y);
+        this.newUsecka.drawShape(g);
     }
 
     private void paintingOfPlus(Graphics g) {
         for (Plus ofPlus : this.listOfPlus) {
             ofPlus.drawShape(g);
         }
-        g.setColor(this.newPlus.getColor());
         this.newPlus.drawShape(g);
     }
 

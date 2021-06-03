@@ -24,4 +24,9 @@ public class Usecka {
         this.endPoint.x = x;
         this.endPoint.y = y;
     }
+
+    public void drawShape(Graphics g){
+        g.setColor(getColor());
+        g.drawLine(getStartPoint().x, getStartPoint().y, getEndPoint().x, getEndPoint().y);
+    }
 }
