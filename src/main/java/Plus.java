@@ -1,17 +1,13 @@
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.awt.*;
 
 @Getter
 @Setter
-public class Plus extends Rectangle{
-    private Color color;
-
-    public Plus(){
-
-    }
-
+@NoArgsConstructor
+public class Plus extends Shape{
     public Plus(Color color, int x, int y, int width, int height){
         super(x, y, width, height);
         this.color = color;

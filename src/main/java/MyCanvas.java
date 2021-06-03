@@ -19,10 +19,8 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
     private boolean usecka;
 
     private Usecka newUsecka;
-    private ArrayList<Usecka> listOfUsecka;
-
     private Plus newPlus;
-    private ArrayList<Plus> listOfPlus;
+    private ArrayList<Shape> listOfShapes;
 
     private int xpos, ypos;
 
@@ -33,34 +31,22 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
         this.color = new Color(Color.RED.getRGB());
-        this.newPlus = new Plus();
         this.drawing = true;
         this.plus = false;
         this.usecka = false;
-        this.newUsecka = new Usecka(); //tu bola chyba ked to nebolo inicializovane pred kreslenim
-        this.listOfUsecka = new ArrayList<>();
-        this.listOfPlus = new ArrayList<>();
+        this.listOfShapes = new ArrayList<>();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        paintingOfUsecka(g);
-        paintingOfPlus(g);
-    }
-
-    private void paintingOfUsecka(Graphics g){
-        for (Usecka value : this.listOfUsecka) {
-            value.drawShape(g);
+        for(Shape shape: this.listOfShapes){
+            shape.drawShape(g);
         }
-        this.newUsecka.drawShape(g);
-    }
-
-    private void paintingOfPlus(Graphics g) {
-        for (Plus ofPlus : this.listOfPlus) {
-            ofPlus.drawShape(g);
-        }
-        this.newPlus.drawShape(g);
+        if(this.newUsecka != null)
+            this.newUsecka.drawShape(g);
+        if(this.newPlus != null)
+            this.newPlus.drawShape(g);
     }
 
     public void changeStateOfMode(){
@@ -80,9 +66,9 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
     @Override
     public void mouseClicked(MouseEvent e) {
         if(!this.drawing){
-            for(int i = this.listOfPlus.size()-1; i >= 0; i--){
-                if(this.listOfPlus.get(i).contains(e.getX(), e.getY())){
-                    this.listOfPlus.get(i).setColor(this.color);
+            for(int i = this.listOfShapes.size()-1; i >= 0; i--){
+                if(this.listOfShapes.get(i).contains(e.getX(), e.getY())){
+                    this.listOfShapes.get(i).setColor(this.color);
                     this.repaint();
                     break;
                 }
@@ -93,7 +79,7 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
     @Override
     public void mousePressed(MouseEvent e) {
         if(this.usecka && this.drawing){
-            this.newUsecka = new Usecka(this.color, new Point(e.getX(), e.getY()), new Point(e.getX(), e.getY()));
+            this.newUsecka = new Usecka(this.color, e.getX(), e.getY(), e.getX(), e.getY());
             this.repaint();
         }
         if(this.plus && this.drawing){
@@ -107,12 +93,11 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
     @Override
     public void mouseReleased(MouseEvent e) {
         if(this.usecka && this.drawing) {
-            this.newUsecka.changeActualEndPoint(e.getX(), e.getY());
-            this.listOfUsecka.add(this.newUsecka);
+            this.listOfShapes.add(this.newUsecka);
             this.repaint();
         }
         if(this.plus && this.drawing) {
-            this.listOfPlus.add(this.newPlus);
+            this.listOfShapes.add(this.newPlus);
             this.repaint();
         }
     }
