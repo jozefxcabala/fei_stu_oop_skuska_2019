@@ -33,12 +33,12 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
         this.color = new Color(Color.RED.getRGB());
+        this.newPlus = new Plus();
         this.drawing = true;
         this.plus = false;
         this.usecka = false;
         this.newUsecka = new Usecka(); //tu bola chyba ked to nebolo inicializovane pred kreslenim
         this.listOfUsecka = new ArrayList<>();
-        this.newPlus = new Plus();
         this.listOfPlus = new ArrayList<>();
     }
 
@@ -59,15 +59,13 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
         g.drawLine(this.newUsecka.getStartPoint().x, this.newUsecka.getStartPoint().y, this.newUsecka.getEndPoint().x, this.newUsecka.getEndPoint().y);
     }
 
-    private void paintingOfPlus(Graphics g){
+    private void paintingOfPlus(Graphics g) {
         for (Plus ofPlus : this.listOfPlus) {
-            g.setColor(ofPlus.getColor());
-            g.fillRect(ofPlus.getRectangle().x, ofPlus.getRectangle().y,
-                    ofPlus.getRectangle().width, ofPlus.getRectangle().height);
+            ofPlus.drawShape(g);
         }
         g.setColor(this.newPlus.getColor());
-        g.fillRect(this.newPlus.getRectangle().x, this.newPlus.getRectangle().y,
-                this.newPlus.getRectangle().width, this.newPlus.getRectangle().height);}
+        this.newPlus.drawShape(g);
+    }
 
     public void changeStateOfMode(){
         this.setDrawing(!this.isDrawing());
@@ -87,7 +85,7 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
     public void mouseClicked(MouseEvent e) {
         if(!this.drawing){
             for(int i = this.listOfPlus.size()-1; i >= 0; i--){
-                if(this.listOfPlus.get(i).getRectangle().contains(e.getX(), e.getY())){
+                if(this.listOfPlus.get(i).contains(e.getX(), e.getY())){
                     this.listOfPlus.get(i).setColor(this.color);
                     this.repaint();
                     break;
@@ -105,7 +103,7 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
         if(this.plus && this.drawing){
             this.xpos = e.getX();
             this.ypos = e.getY();
-            this.newPlus = new Plus(this.color, new Rectangle(xpos, ypos, 3, 3));
+            this.newPlus = new Plus(this.color, xpos, ypos, 3, 3);
             this.repaint();
         }
     }
@@ -144,24 +142,24 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
             int dy = e.getY();
 
             if (dx > xpos && dy > ypos) {
-                this.newPlus.getRectangle().width = dx - xpos;
-                this.newPlus.getRectangle().height = dy - ypos;
+                this.newPlus.width = dx - xpos;
+                this.newPlus.height = dy - ypos;
             }
             if (dx < xpos && dy > ypos) {
-                this.newPlus.getRectangle().x = dx;
-                this.newPlus.getRectangle().width = xpos - dx;
-                this.newPlus.getRectangle().height = dy - ypos;
+                this.newPlus.x = dx;
+                this.newPlus.width = xpos - dx;
+                this.newPlus.height = dy - ypos;
             }
             if (dx > xpos && dy < ypos) {
-                this.newPlus.getRectangle().y = dy;
-                this.newPlus.getRectangle().width = dx - xpos;
-                this.newPlus.getRectangle().height = ypos - dy;
+                this.newPlus.y = dy;
+                this.newPlus.width = dx - xpos;
+                this.newPlus.height = ypos - dy;
             }
             if (dx < xpos && dy < ypos) {
-                this.newPlus.getRectangle().x = dx;
-                this.newPlus.getRectangle().y = dy;
-                this.newPlus.getRectangle().width = xpos - dx;
-                this.newPlus.getRectangle().height = ypos - dy;
+                this.newPlus.x = dx;
+                this.newPlus.y = dy;
+                this.newPlus.width = xpos - dx;
+                this.newPlus.height = ypos - dy;
             }
             this.repaint();
         }

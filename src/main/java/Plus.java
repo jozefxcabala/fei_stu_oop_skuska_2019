@@ -5,15 +5,21 @@ import java.awt.*;
 
 @Getter
 @Setter
-public class Plus{
+public class Plus extends Rectangle{
     private Color color;
-    private Rectangle rectangle;
 
     public Plus(){
-        this.rectangle = new Rectangle();
+
     }
-    public Plus(Color color, Rectangle rectangle){
+
+    public Plus(Color color, int x, int y, int width, int height){
+        super(x, y, width, height);
         this.color = color;
-        this.rectangle = rectangle;
+    }
+
+    public void drawShape(Graphics g) {
+        g.setColor(color);
+        g.fillRect(this.x,((this.y)+(this.height)/(3)), this.width, (this.height)/(3));
+        g.fillRect( (this.x)+((this.width)/(3)), this.y, ((this.width)/(3)), this.height);
     }
 }
