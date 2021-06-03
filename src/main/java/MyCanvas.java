@@ -27,6 +27,7 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
     private int xpos, ypos;
 
     public MyCanvas(){
+        super();
         this.setPreferredSize(new Dimension(400,400));
         this.setBackground(Color.WHITE);
         this.addMouseListener(this);
@@ -49,20 +50,20 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
     }
 
     private void paintingOfUsecka(Graphics g){
-        for(int i = 0; i < this.listOfUsecka.size(); i++){
-            g.setColor(this.listOfUsecka.get(i).getColor());
-            g.drawLine(this.listOfUsecka.get(i).getStartPoint().x, this.listOfUsecka.get(i).getStartPoint().y, this.listOfUsecka.get(i).getEndPoint().x,
-                    this.listOfUsecka.get(i).getEndPoint().y);
+        for (Usecka value : this.listOfUsecka) {
+            g.setColor(value.getColor());
+            g.drawLine(value.getStartPoint().x, value.getStartPoint().y, value.getEndPoint().x,
+                    value.getEndPoint().y);
         }
         g.setColor(this.newUsecka.getColor());
         g.drawLine(this.newUsecka.getStartPoint().x, this.newUsecka.getStartPoint().y, this.newUsecka.getEndPoint().x, this.newUsecka.getEndPoint().y);
     }
 
     private void paintingOfPlus(Graphics g){
-        for(int i = 0; i < this.listOfPlus.size(); i++){
-            g.setColor(this.listOfPlus.get(i).getColor());
-            g.fillRect(this.listOfPlus.get(i).getRectangle().x, this.listOfPlus.get(i).getRectangle().y,
-                    this.listOfPlus.get(i).getRectangle().width, this.listOfPlus.get(i).getRectangle().height);
+        for (Plus ofPlus : this.listOfPlus) {
+            g.setColor(ofPlus.getColor());
+            g.fillRect(ofPlus.getRectangle().x, ofPlus.getRectangle().y,
+                    ofPlus.getRectangle().width, ofPlus.getRectangle().height);
         }
         g.setColor(this.newPlus.getColor());
         g.fillRect(this.newPlus.getRectangle().x, this.newPlus.getRectangle().y,

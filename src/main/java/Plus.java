@@ -16,14 +16,4 @@ public class Plus{
         this.color = color;
         this.rectangle = rectangle;
     }
-
-    public void changeActualEndPoint(int width, int height){
-        this.rectangle.width = width;
-        this.rectangle.height = height;
-    }
-
-    public void changeActualStartPoint(int x, int y){
-        this.rectangle.x = x;
-        this.rectangle.y = y;
-    }
 }
