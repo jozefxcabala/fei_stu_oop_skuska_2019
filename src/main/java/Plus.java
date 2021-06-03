@@ -5,7 +5,7 @@ import java.awt.*;
 
 @Getter
 @Setter
-public class Plus {
+public class Plus{
     private Color color;
     private Rectangle rectangle;
 

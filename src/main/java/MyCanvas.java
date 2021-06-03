@@ -24,6 +24,8 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
     private Plus newPlus;
     private ArrayList<Plus> listOfPlus;
 
+    private int xpos, ypos;
+
     public MyCanvas(){
         this.setPreferredSize(new Dimension(400,400));
         this.setBackground(Color.WHITE);
@@ -100,7 +102,9 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
             this.repaint();
         }
         if(this.plus && this.drawing){
-            this.newPlus = new Plus(this.color, new Rectangle(e.getX(), e.getY(), 3, 3));
+            this.xpos = e.getX();
+            this.ypos = e.getY();
+            this.newPlus = new Plus(this.color, new Rectangle(xpos, ypos, 3, 3));
             this.repaint();
         }
     }
@@ -113,7 +117,6 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
             this.repaint();
         }
         if(this.plus && this.drawing) {
-            this.newPlus.changeActualEndPoint(e.getX() - this.newPlus.getRectangle().x, e.getY() - this.newPlus.getRectangle().y);
             this.listOfPlus.add(this.newPlus);
             this.repaint();
         }
@@ -136,9 +139,29 @@ public class MyCanvas extends JPanel implements MouseListener, MouseMotionListen
             this.repaint();
         }
         if(this.plus && this.drawing) {
-            this.newPlus.changeActualEndPoint(e.getX() - this.newPlus.getRectangle().x, e.getY() - this.newPlus.getRectangle().y);
+            int dx = e.getX();
+            int dy = e.getY();
 
-
+            if (dx > xpos && dy > ypos) {
+                this.newPlus.getRectangle().width = dx - xpos;
+                this.newPlus.getRectangle().height = dy - ypos;
+            }
+            if (dx < xpos && dy > ypos) {
+                this.newPlus.getRectangle().x = dx;
+                this.newPlus.getRectangle().width = xpos - dx;
+                this.newPlus.getRectangle().height = dy - ypos;
+            }
+            if (dx > xpos && dy < ypos) {
+                this.newPlus.getRectangle().y = dy;
+                this.newPlus.getRectangle().width = dx - xpos;
+                this.newPlus.getRectangle().height = ypos - dy;
+            }
+            if (dx < xpos && dy < ypos) {
+                this.newPlus.getRectangle().x = dx;
+                this.newPlus.getRectangle().y = dy;
+                this.newPlus.getRectangle().width = xpos - dx;
+                this.newPlus.getRectangle().height = ypos - dy;
+            }
             this.repaint();
         }
     }
